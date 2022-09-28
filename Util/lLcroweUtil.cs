@@ -949,6 +949,22 @@ namespace lLCroweTool
             rotateTarget.rotation = Quaternion.Euler(0, 0, zAngle);
         }
 
+        public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max)
+        {
+            float zAngle = rotateTarget.eulerAngles.z;
+            if (zAngle > min - 0.001f)
+            {
+                
+            }
+            else if (zAngle < max + 0.001f)
+            {
+                
+            }
+
+            //RotateTurret
+        }
+
+
         /// <summary>
         /// 게임오브젝트의 태그가 원하는 태그들중에 있는 체크하는 함수
         /// </summary>
