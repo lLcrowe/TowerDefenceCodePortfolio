@@ -917,7 +917,7 @@ namespace lLCroweTool
             Vector2 targetDir = lookTarget - rotateTarget.position;
             float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
             Quaternion quaternion = Quaternion.AngleAxis(newangle, Vector3.forward);
-            rotateTarget.rotation = Quaternion.Slerp(rotateTarget.rotation, quaternion, rotateSpeed);//slerp     
+            rotateTarget.localRotation = Quaternion.Slerp(rotateTarget.localRotation, quaternion, rotateSpeed);//slerp     
         }
 
         /// <summary>
@@ -932,7 +932,7 @@ namespace lLCroweTool
             Vector2 targetDir = lookTarget - rotateTarget.position;
             float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
             Quaternion quaternion = Quaternion.AngleAxis(newangle, Vector3.forward);
-            rotateTarget.rotation = Quaternion.Lerp(rotateTarget.rotation, quaternion, rotateSpeed);
+            rotateTarget.localRotation = Quaternion.Lerp(rotateTarget.localRotation, quaternion, rotateSpeed);
         }
 
         /// <summary>
@@ -946,22 +946,25 @@ namespace lLCroweTool
             Vector2 targetDir = lookTarget - rotateTarget.position;
             float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
             float zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, newangle, rotateSpeed);//일정하게 움직임
-            rotateTarget.rotation = Quaternion.Euler(0, 0, zAngle);
+            rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
         }
 
+        /// <summary>
+        /// 일정한 속도로 제한된 회전
+        /// </summary>
+        /// <param name="rotateTarget">회전하는 트랜스폼</param>
+        /// <param name="lookTarget">봐야할 타겟</param>
+        /// <param name="rotateSpeed">회전 속도</param>
+        /// <param name="min">최소각도 0 ~ 180</param>
+        /// <param name="max">최대각도 0 ~ -180</param>
         public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max)
-        {
-            float zAngle = rotateTarget.eulerAngles.z;
-            if (zAngle > min - 0.001f)
-            {
-                
-            }
-            else if (zAngle < max + 0.001f)
-            {
-                
-            }
-
-            //RotateTurret
+        {    
+            //180 ~ 0 0~ -180
+            Vector2 targetDir = lookTarget - rotateTarget.position;
+            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
+            float zAngle = Mathf.Clamp(newangle, min, max);
+            zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle, rotateSpeed);
+            rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
         }
 
 
