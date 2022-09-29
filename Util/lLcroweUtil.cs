@@ -955,18 +955,56 @@ namespace lLCroweTool
         /// <param name="rotateTarget">회전하는 트랜스폼</param>
         /// <param name="lookTarget">봐야할 타겟</param>
         /// <param name="rotateSpeed">회전 속도</param>
-        /// <param name="min">최소각도 0 ~ 180</param>
-        /// <param name="max">최대각도 0 ~ -180</param>
+        /// <param name="min">최소각도-180 ~ 0</param>
+        /// <param name="max">최대각도 0 ~ 180</param>
         public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max)
-        {    
+        {
+            //우측이 0 이고
+            //좌측이 +-180
+            //회전자체는 잘되지만 -180~180 넘어가는 구간에서 회전이 맘에 안듬
+            //반대로 돌아감
+
+            
+
+
+        
+           
+
+            //원래있던거
             //180 ~ 0 0~ -180
             Vector2 targetDir = lookTarget - rotateTarget.position;
-            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
+            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
+            Debug.Log(newangle);
+
+            //모든걸 양수에서처리해서 돌아가게 해야지 원하는 방향으로 돌아갈수 있을듯하다
+
+
+
+
+
+
+
+
+
             float zAngle = Mathf.Clamp(newangle, min, max);
-            zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle, rotateSpeed);
+            //float zAngle = ClampAngle(newangle, min, max);
+            zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle - 90, rotateSpeed);
             rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
+
+
+
+
         }
 
+     
+
+        public static float ClampAngle(float angle, float from, float to)
+        {
+            // accepts e.g. -80, 80
+            if (angle < 0f) angle = 360 + angle;
+            if (angle > 180f) return Mathf.Max(angle, 360 + from);
+            return Mathf.Min(angle, to);
+        }
 
         /// <summary>
         /// 게임오브젝트의 태그가 원하는 태그들중에 있는 체크하는 함수
