@@ -971,23 +971,20 @@ namespace lLCroweTool
            
 
             //원래있던거
-            //180 ~ 0 0~ -180
+            //위가180 ~ 0
+            //아래가0 ~ -180
             Vector2 targetDir = lookTarget - rotateTarget.position;
-            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
-            Debug.Log(newangle);
+            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;//0~360            
 
             //모든걸 양수에서처리해서 돌아가게 해야지 원하는 방향으로 돌아갈수 있을듯하다
+            //
 
 
 
-
-
-
-
-
-
-            float zAngle = Mathf.Clamp(newangle, min, max);
+            //float zAngle = Mathf.Clamp(newangle, min, max);//x축 기준일시
+            float zAngle = Mathf.Clamp(newangle , min + 90, max+ 90);//Y축 기준일시
             //float zAngle = ClampAngle(newangle, min, max);
+            Debug.Log($"Target : {(int)newangle}, Result : {(int)zAngle}");
             zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle - 90, rotateSpeed);
             rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
 
