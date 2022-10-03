@@ -42,7 +42,6 @@ namespace Assets
         /// <summary>
         /// 리코일 액션
         /// </summary>
-        [ButtonMethod]
         public void ActionRecoil()
         {
             if (handle.IsRunning)

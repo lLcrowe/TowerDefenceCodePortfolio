@@ -24,10 +24,9 @@ namespace Assets.EditorOnly
         private bool isExist2 = false;
 
 
-        void OnEnable()
+        private void OnEnable()
         {
             towerDefenceManager = (TowerDefenceManager)target;
-
         }
 
         public void GetData()

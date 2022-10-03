@@ -958,49 +958,17 @@ namespace lLCroweTool
         /// <param name="min">최소각도-180 ~ 0</param>
         /// <param name="max">최대각도 0 ~ 180</param>
         public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max)
-        {
-            //우측이 0 이고
-            //좌측이 +-180
+        {   
             //회전자체는 잘되지만 -180~180 넘어가는 구간에서 회전이 맘에 안듬
-            //반대로 돌아감
-
+            //몇몇구간이 반대로 돌아감=> 시야처리를 통해 작업
             
-
-
-        
-           
-
-            //원래있던거
-            //위가180 ~ 0
-            //아래가0 ~ -180
             Vector2 targetDir = lookTarget - rotateTarget.position;
-            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;//0~360            
-
-            //모든걸 양수에서처리해서 돌아가게 해야지 원하는 방향으로 돌아갈수 있을듯하다
-            //
-
-
-
+            float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;//0~360
             //float zAngle = Mathf.Clamp(newangle, min, max);//x축 기준일시
-            float zAngle = Mathf.Clamp(newangle , min + 90, max+ 90);//Y축 기준일시
-            //float zAngle = ClampAngle(newangle, min, max);
-            Debug.Log($"Target : {(int)newangle}, Result : {(int)zAngle}");
+            float zAngle = Mathf.Clamp(newangle, min + 90, max + 90);//Y축 기준일시
+            //Debug.Log($"Target : {(int)newangle}, Result : {(int)zAngle}");
             zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle - 90, rotateSpeed);
             rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
-
-
-
-
-        }
-
-     
-
-        public static float ClampAngle(float angle, float from, float to)
-        {
-            // accepts e.g. -80, 80
-            if (angle < 0f) angle = 360 + angle;
-            if (angle > 180f) return Mathf.Max(angle, 360 + from);
-            return Mathf.Min(angle, to);
         }
 
         /// <summary>
