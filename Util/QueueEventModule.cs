@@ -25,7 +25,7 @@ namespace lLCroweTool
         {
             queueList.Clear();
             
-            foreach (var target in this)
+            foreach (T target in this)
             {
                 queueList.Add(target);                
             }

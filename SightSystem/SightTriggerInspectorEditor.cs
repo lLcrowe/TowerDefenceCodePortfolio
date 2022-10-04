@@ -34,11 +34,22 @@ namespace Assets.EditorOnly
             Vector2[] circlePos;
             int len;
 
+            //원형을 그리자
+            //각도체크후 일정각도마다 좌표찍기
+            //찍고 싶은 점 숫자 구하기
+            //해당 점 숫자 만큼 각도를 줘서 점을 찍어주기
+            float totalAngle = Mathf.Abs(sightTrigger.leftAngle) + Mathf.Abs(sightTrigger.rightAngle);
+            float addedAngle = totalAngle / sightTrigger.circleDotgeAmount;
+            float temp = sightTrigger.leftAngle;//초기값
+
+            //시작2 포인트1//끝포인트1//중간포인트circleDotgeAmount
             if (sightTrigger.isUseNearRange)
             {
-                //시작2 포인트1//끝포인트1//중간포인트circleDotgeAmount
-                len = sightTrigger.circleDotgeAmount + 3;
+                //최대거리 체크
+                sightTrigger.nearRange = sightTrigger.nearRange > sightTrigger.range ? sightTrigger.range : sightTrigger.nearRange;
 
+                //설정
+                len = sightTrigger.circleDotgeAmount + 3;
                 circlePos = new Vector2[len];
                 circlePos[0] = rightPos * sightTrigger.nearRange;
                 startPos++;
@@ -48,8 +59,8 @@ namespace Assets.EditorOnly
                 startPos++;
             }
             else
-            {
-                //시작1 포인트1//끝포인트1//중간포인트circleDotgeAmount
+            {   
+                //설정
                 len = sightTrigger.circleDotgeAmount + 2;
                 circlePos = new Vector2[len];
                 circlePos[0] = worldPos;
@@ -58,23 +69,14 @@ namespace Assets.EditorOnly
                 startPos++;
             }
 
-            //원형을 그리자
-            //각도체크후 일정각도마다 좌표찍기
-            //찍고 싶은 점 숫자 구하기
-            //해당 점 숫자 만큼 각도를 줘서 점을 찍어주기
-            float totalAngle = Mathf.Abs(sightTrigger.leftAngle) + Mathf.Abs(sightTrigger.rightAngle);
-            float addedAngle = totalAngle / sightTrigger.circleDotgeAmount;
-            float temp = sightTrigger.leftAngle;//초기값
-
+            //외각원형그려주기
             for (int i = startPos; i < len; i++)
             {
                 temp -= addedAngle;
                 Vector2 pt = Quaternion.AngleAxis(temp, Vector3.forward) * (GetSightDirectionType(sightTrigger.sightDirectionType) * range);
                 circlePos[i] = pt;
             }
-
             circlePos[len - 1] = rightPos * range;
-
 
             poly2D.points = circlePos;
         }

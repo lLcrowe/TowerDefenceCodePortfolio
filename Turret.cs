@@ -15,6 +15,7 @@ namespace Assets
         [Header("회전 설정")]
         public float rotateSpeed;
         public RotateType rotateType;
+        public Transform rotateObject;
 
         //컴포넌트
         private GunRecoilAnim gunRecoilAnim;
@@ -80,7 +81,7 @@ namespace Assets
 
         protected override Transform GetRotateTr()
         {
-            return tr;
+            return rotateObject;
         }
 
         protected override float GetRotateSpeed()

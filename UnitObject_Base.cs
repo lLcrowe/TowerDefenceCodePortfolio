@@ -44,6 +44,14 @@ namespace Assets
             unitObject = GetComponent<UnitObject>();
         }
 
+        protected static bool CheckSightTrigger()
+        {
+           
+
+
+            return true;
+        }
+
         /// <summary>
         /// 근처 원형으로 감지
         /// </summary>
