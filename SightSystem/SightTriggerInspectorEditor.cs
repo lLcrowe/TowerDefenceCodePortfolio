@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using Assets.TowerDefencePortfolio;
+using lLCroweTool;
 
 namespace Assets.EditorOnly
 {
@@ -28,8 +29,8 @@ namespace Assets.EditorOnly
             //로컬위치로 위치가 지정됨
             float range = sightTrigger.range;
             Vector3 worldPos = Vector2.zero;
-            Vector3 rightPos = AngleToDirection(-sightTrigger.rightAngle, sightTrigger.sightDirectionType);
-            Vector3 leftPos = AngleToDirection(sightTrigger.leftAngle, sightTrigger.sightDirectionType);
+            Vector3 rightPos = lLcroweUtil.AngleToDirection(-sightTrigger.rightAngle, sightTrigger.sightDirectionType);
+            Vector3 leftPos = lLcroweUtil.AngleToDirection(sightTrigger.leftAngle, sightTrigger.sightDirectionType);
             int startPos = 0;//반복문 시작위치
             Vector2[] circlePos;
             int len;
@@ -73,37 +74,12 @@ namespace Assets.EditorOnly
             for (int i = startPos; i < len; i++)
             {
                 temp -= addedAngle;
-                Vector2 pt = Quaternion.AngleAxis(temp, Vector3.forward) * (GetSightDirectionType(sightTrigger.sightDirectionType) * range);
+                Vector2 pt = Quaternion.AngleAxis(temp, Vector3.forward) * (lLcroweUtil.GetSightDirectionType(sightTrigger.sightDirectionType) * range);
                 circlePos[i] = pt;
             }
             circlePos[len - 1] = rightPos * range;
 
             poly2D.points = circlePos;
-        }
-
-        private Vector3 AngleToDirection(float angle, SightDirectionType sightDirectionType)
-        {
-            Vector3 direction = GetSightDirectionType(sightDirectionType);
-            var quaternion = Quaternion.Euler(0, 0, angle);
-            Vector3 newDirection = quaternion * direction;
-            return newDirection;
-        }
-
-        private Vector2 GetSightDirectionType(SightDirectionType sightDirectionType)
-        {
-            Vector2 direction = Vector3.zero;
-            switch (sightDirectionType)
-            {
-                case SightDirectionType.X:
-                    //direction = sightTrigger.transform.right;
-                    direction = Vector2.right;
-                    break;
-                case SightDirectionType.Y:
-                    //direction = sightTrigger.transform.up;
-                    direction = Vector2.up;
-                    break;
-            }
-            return direction;
         }
     }
 }

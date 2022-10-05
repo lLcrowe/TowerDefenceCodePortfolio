@@ -1,3 +1,4 @@
+using Assets.TowerDefencePortfolio;
 using lLCroweTool;
 using lLCroweTool.ObjectPool;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 namespace Assets
 {
+    [RequireComponent(typeof(SightTrigger))]
     public class Turret : UnitObject_Base
     {
         //터렛
@@ -19,20 +21,29 @@ namespace Assets
 
         //컴포넌트
         private GunRecoilAnim gunRecoilAnim;
+        private SightTrigger sightTrigger;
 
         protected override void Awake()
         {
             base.Awake();
             gunRecoilAnim = GetComponent<GunRecoilAnim>();
+            sightTrigger = GetComponent<SightTrigger>();
         }
 
         void Update()
         {
-            //원형내부에 아무것도 없으면 넘어감
+            ////원형내부에 아무것도 없으면 넘어감
             if (!SearchNearSide(this))
             {
                 return;
             }
+
+            //각만큼 체크
+            if (!sightTrigger.GetFirstTarget(out Collider2D collider2D))
+            {
+                return;
+            }
+            target = collider2D.transform;
 
             //회전
             Rotate(this, rotateType);

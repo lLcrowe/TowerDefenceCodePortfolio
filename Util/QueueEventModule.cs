@@ -10,7 +10,7 @@ namespace lLCroweTool
     public class QueueEventModule<T>: Queue<T>, ISerializationCallbackReceiver
     {
         //현모듈은 큐에 특정타입을 집어넣은 후에 특정시간이 지난뒤에 이벤트를 작동하게 만드는 기능이 존재
-        [SerializeField] private List<T> queueList = new List<T>();//키값
+        [SerializeField] private List<T> queueList = new List<T>();//시리얼라이징용
         [SerializeField] private float timer = 0.1f;//타이머
         [SerializeField] private float time;//타이머 체크용
 

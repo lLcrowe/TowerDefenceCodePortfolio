@@ -30,7 +30,7 @@ namespace Assets
 
         
         //체크용//스태딕처리가능할듯함
-        [SerializeField] [HideInInspector]private Transform target;//타겟팅        
+        [SerializeField] [HideInInspector]protected Transform target;//타겟팅
         protected List<RaycastHit2D> hit2DList = new List<RaycastHit2D>();
         protected List<Collider2D> collider2DList = new List<Collider2D>();
 

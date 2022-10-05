@@ -949,6 +949,8 @@ namespace lLCroweTool
             rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
         }
 
+        private const float addAngle = 90f;
+
         /// <summary>
         /// 일정한 속도로 제한된 회전
         /// </summary>
@@ -957,15 +959,25 @@ namespace lLCroweTool
         /// <param name="rotateSpeed">회전 속도</param>
         /// <param name="min">최소각도-180 ~ 0</param>
         /// <param name="max">최대각도 0 ~ 180</param>
-        public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max)
+        public static void RotateLimit(Transform rotateTarget, Vector3 lookTarget, float rotateSpeed, float min, float max , AxisDirectionType axisDirectionType)
         {   
             //회전자체는 잘되지만 -180~180 넘어가는 구간에서 회전이 맘에 안듬
             //몇몇구간이 반대로 돌아감=> 시야처리를 통해 작업
             
             Vector2 targetDir = lookTarget - rotateTarget.position;
             float newangle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;//0~360
-            //float zAngle = Mathf.Clamp(newangle, min, max);//x축 기준일시
-            float zAngle = Mathf.Clamp(newangle, min + 90, max + 90);//Y축 기준일시
+
+            float zAngle = 0;
+            switch (axisDirectionType)
+            {
+                case AxisDirectionType.X:
+                    zAngle = Mathf.Clamp(newangle, min, max);//x축 기준일시
+                    break;
+                case AxisDirectionType.Y:
+                    zAngle = Mathf.Clamp(newangle, min + addAngle, max + addAngle);//Y축 기준일시
+                    break;
+            }
+            
             //Debug.Log($"Target : {(int)newangle}, Result : {(int)zAngle}");
             zAngle = Mathf.MoveTowardsAngle(rotateTarget.eulerAngles.z, zAngle - 90, rotateSpeed);
             rotateTarget.localRotation = Quaternion.Euler(0, 0, zAngle);
@@ -1262,25 +1274,87 @@ namespace lLCroweTool
         }
        
         //배열변경
-        public static Vector2[] ConvertVector2Array(this Vector3[] v3)
+        /// <summary>
+        /// 벡터3들을 벡터2들로 변경해주는 함수
+        /// </summary>
+        /// <param name="vector3Array">벡터3들</param>
+        /// <returns>벡터2들</returns>
+        public static Vector2[] ConvertVector2Array(this Vector3[] vector3Array)
         {
-            return System.Array.ConvertAll<Vector3, Vector2>(v3, GetV3fromV2);
+            return System.Array.ConvertAll<Vector3, Vector2>(vector3Array, GetV3fromV2);
         }
 
-        public static Vector3[] ConvertVector3Array(this Vector2[] v3)
+        /// <summary>
+        /// 벡터2들을 벡터3들로 변경해주는 함수
+        /// </summary>
+        /// <param name="vector2Array">벡터2들</param>
+        /// <returns></returns>
+        public static Vector3[] ConvertVector3Array(this Vector2[] vector2Array)
         {
-            return System.Array.ConvertAll<Vector2, Vector3>(v3, GetV2fromV3);
+            return System.Array.ConvertAll<Vector2, Vector3>(vector2Array, GetV2fromV3);
         }
 
-
-        public static Vector3 GetV2fromV3(Vector2 v3)
+        /// <summary>
+        /// 벡터2를 벡터3로 변경
+        /// </summary>
+        /// <param name="vector2">벡터2</param>
+        /// <returns>벡터3</returns>
+        public static Vector3 GetV2fromV3(Vector2 vector2)
         {
-            return new Vector3(v3.x, v3.y, 0);
+            return new Vector3(vector2.x, vector2.y, 0);
         }
 
-        public static Vector2 GetV3fromV2(Vector3 v3)
+        /// <summary>
+        /// 벡터3를 벡터2로 변경
+        /// </summary>
+        /// <param name="vector3">벡터3</param>
+        /// <returns>벡터2</returns>
+        public static Vector2 GetV3fromV2(Vector3 vector3)
         {
-            return new Vector2(v3.x, v3.y);
+            return new Vector2(vector3.x, vector3.y);
         }
+
+        /// <summary>
+        /// 각도를 방향으로 변경해주는 함수
+        /// </summary>
+        /// <param name="angle">각도</param>
+        /// <param name="axisDirectionType"></param>
+        /// <returns>방향</returns>
+        public static Vector3 AngleToDirection(float angle, AxisDirectionType axisDirectionType)
+        {
+            Vector3 direction = GetSightDirectionType(axisDirectionType);
+            var quaternion = Quaternion.Euler(0, 0, angle);
+            Vector3 newDirection = quaternion * direction;
+            return newDirection;
+        }
+
+        /// <summary>
+        /// 축 방향타입 설정에 따른 방향을 가져오는 함수
+        /// </summary>
+        /// <param name="axisDirectionType">축 방향타입</param>
+        /// <returns>방향</returns>
+        public static Vector2 GetSightDirectionType(AxisDirectionType axisDirectionType)
+        {
+            Vector2 direction = Vector3.zero;
+            switch (axisDirectionType)
+            {
+                case AxisDirectionType.X:
+                    //direction = sightTrigger.transform.right;
+                    direction = Vector2.right;
+                    break;
+                case AxisDirectionType.Y:
+                    //direction = sightTrigger.transform.up;
+                    direction = Vector2.up;
+                    break;
+            }
+            return direction;
+        }
+    }
+
+
+    public enum AxisDirectionType
+    {
+        X,//X 방향
+        Y,//Y 방향
     }
 }
