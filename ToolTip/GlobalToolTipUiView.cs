@@ -15,6 +15,8 @@ namespace lLCroweTool.ToolTipSystem
                     //if (ReferenceEquals(instance, null))
                     if (ReferenceEquals(instance, null))
                     {
+                        var temp = typeof(GlobalToolTipUiView);
+                        LogManager.Register(temp, temp.Name, true, true);
                         LogManager.Log(typeof(GlobalToolTipUiView) ,"해당되는 오브젝트가 없습니다. 게임실행시 처음부터 초기화해주세요", null, LogManager.LogType.Waring);
 
                         // ReSharper disable once ArrangeStaticMemberQualifier

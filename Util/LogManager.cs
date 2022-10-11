@@ -80,7 +80,7 @@ namespace lLCroweTool.LogSystem
         /// <param name="fileName">파일이름</param>
         /// <param name="printToConsole">콘솔출력 사용여부</param>
         /// <param name="printToFile">파일출력 사용여부</param>
-        public static void Register(string logDataKey, string fileName, bool printToConsole, bool printToFile)
+        public static void Register(object logDataKey, string fileName, bool printToConsole, bool printToFile)
         {
             if (!Instance.isLogMangerUseLog || Instance.logDataBible.ContainsKey(logDataKey))
             {
