@@ -144,8 +144,8 @@ namespace lLCroweTool
                     //새로등록
                     LocalizeData tempData = new LocalizeData();
                     tempData.string_ID = localize_ID;
-                    tempData.kor = "";
-                    tempData.eng = "";
+                    tempData.kor = localize_ID + "NullofData for Language";
+                    tempData.eng = localize_ID + "NullofData for Language";
                     localizeDBData.localizeDataBible.Add(tempData.string_ID, tempData);
                 }
             }
