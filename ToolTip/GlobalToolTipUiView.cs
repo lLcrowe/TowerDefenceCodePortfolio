@@ -1,4 +1,4 @@
-﻿using lLCroweTool.DebugLog;
+﻿using lLCroweTool.LogSystem;
 
 namespace lLCroweTool.ToolTipSystem
 {
@@ -15,7 +15,7 @@ namespace lLCroweTool.ToolTipSystem
                     //if (ReferenceEquals(instance, null))
                     if (ReferenceEquals(instance, null))
                     {
-                        DebugManager.Instance.Log("해당되는 오브젝트가 없습니다. 게임실행시 처음부터 초기화해주세요", null, DebugManager.DebugType.Waring);
+                        LogManager.Log(typeof(GlobalToolTipUiView) ,"해당되는 오브젝트가 없습니다. 게임실행시 처음부터 초기화해주세요", null, LogManager.LogType.Waring);
 
                         // ReSharper disable once ArrangeStaticMemberQualifier
                         //_instance = (MasterAudio)GameObject.FindObjectOfType(typeof(MasterAudio));

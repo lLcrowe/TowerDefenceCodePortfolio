@@ -34,6 +34,11 @@ namespace lLCroweTool
         }
 
         /// <summary>
+        /// 번역정보를 찾을때 없으면 등록시키기위한 변수//어차피 리드온리라서 에디터에서만 사용가능
+        /// </summary>
+        public bool isUseRegister = false;
+
+        /// <summary>
         /// 현지화할 언어타입
         /// </summary>
         public LanguageType languageType;
@@ -116,9 +121,10 @@ namespace lLCroweTool
             //검색후 해당 텍스트가 있으면 그걸 반환시킴
             if (localizeDBData != null)
             {
-                if (localizeDBData.localizeDataBible.ContainsKey(localize_ID))
+                //if (localizeDBData.localizeDataBible.ContainsKey(localize_ID))
+                if (localizeDBData.localizeDataBible.TryGetValue(localize_ID, out LocalizeData localizeData))
                 {
-                    LocalizeData localizeData = localizeDBData.localizeDataBible[localize_ID];
+                    //LocalizeData localizeData = localizeDBData.localizeDataBible[localize_ID];
                     switch (languageType)
                     {
                         case LanguageType.Kor:
@@ -132,6 +138,15 @@ namespace lLCroweTool
                     {
                         text = localize_ID + "NullofData for Language";
                     }
+                }
+                else if (isUseRegister)
+                {
+                    //새로등록
+                    LocalizeData tempData = new LocalizeData();
+                    tempData.string_ID = localize_ID;
+                    tempData.kor = "";
+                    tempData.eng = "";
+                    localizeDBData.localizeDataBible.Add(tempData.string_ID, tempData);
                 }
             }
             return text;
