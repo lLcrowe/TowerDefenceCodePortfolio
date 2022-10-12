@@ -21,7 +21,7 @@ namespace Assets
 
         [Header("포 발사후 원래되로 가는 설정")]
         [Tooltip("원래 위치")]
-        public float originDistance = 1;//원래위치
+        public float originDistance = 1;//원래위치//현재위치를 기준함//원할시 런타임에서 세팅후 복붙하기
         [Tooltip("되돌아오는 시간")]
         public float resetIntervalTime = 0.3f;//되돌아오는 시간
         [Tooltip("되돌아오는 시간동안 코루틴이 대기하는 여부")]
@@ -37,6 +37,11 @@ namespace Assets
         [Tooltip("포 위치는 현스크립트로 설정됩니다.")]
         public Transform[] gunTransformArray = new Transform[0];
         private CoroutineHandle handle;
+
+        private void Awake()
+        {
+            originDistance = transform.position.y;
+        }
 
 
         /// <summary>
