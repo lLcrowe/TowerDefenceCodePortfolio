@@ -18,3 +18,10 @@ Feature(기능)
 3. GunRecoilAnim(총노리쇠후퇴 애님설정)
 
 ![터렛설정](https://user-images.githubusercontent.com/44671731/195511325-dca1621c-d146-4c37-899b-f0974833ed06.gif)
+
+
+
+-=2. Localize(번역)
+1. CSV 읽기 쓰기
+2. 딕셔너리를 이용한 빠른검색
+3. 설정시 에디터상에서 돌아갈떄 딕셔너리를 추가시켜 후에 CSV로 뺼수 
