@@ -54,7 +54,7 @@ namespace Assets
                 Fire();
             }
         }
-
+        
         protected override void Fire()
         {
             //น฿ป็

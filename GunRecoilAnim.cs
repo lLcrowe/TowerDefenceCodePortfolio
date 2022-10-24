@@ -40,10 +40,11 @@ namespace Assets
 
         private void Awake()
         {
-            originDistance = transform.position.y;
+            originDistance = gunTransformArray[0].localPosition.y;
         }
 
 
+        [ButtonMethod]
         /// <summary>
         /// 리코일 액션
         /// </summary>
