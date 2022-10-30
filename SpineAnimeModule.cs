@@ -32,6 +32,13 @@ public class SpineAnimeModule : MonoBehaviour
     //
 
 
+    //같이작업하기
+    //20220720
+    //스파인 유틸리티API 내마음되로 커스텀하기
+    //기존 API가 기존코드 작동구조와 최적화가 마음에 안들음
+    //=>시간 상당히 오래걸림 체크할것
+    //=> 구조체크가 먼저 SkeletonAnimation이 메인같은데
+
 
     [System.Serializable]
     public class SpineDirectionAnimInfo
@@ -48,19 +55,21 @@ public class SpineAnimeModule : MonoBehaviour
     //화면의 중간지점을 확인후 해당방향으로 알파값(두개의 애님을 블랜드한 값)을 정하는게
     //믹스 0.3
     //스파인엔 트랙이 5개인데 API는 몇까지될려나 확인하기
+    //API 사용법체크
+    
 
 
 
 
 
     public SkeletonDataAsset animData;
-
+    public SkeletonAnimation anim;
 
 
     
 
     [SpineAnimation]
-    public string anim;
+    public string idleAnim;
 
     [SpineEvent]
     public string spineEvent;
@@ -68,6 +77,6 @@ public class SpineAnimeModule : MonoBehaviour
 
     public void Test()
     {
-
+        anim.AnimationState.SetAnimation(0, idleAnim, true);
     }
 }
