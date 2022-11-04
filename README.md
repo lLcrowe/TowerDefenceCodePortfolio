@@ -1,7 +1,9 @@
 # TowerDefencePortfolio
 자기의 코드스타일을 볼수 있는 간단한 형태의 포트폴리오
-클라이언트는 클라쪽으로 가야된다. 다른산업에 연봉4천 수습으로 들어갔지만 너무재미가 없다.
-정한쪽으로 가야되는건 맞는거 같다.
+
+클라이언트는 클라쪽으로 가야된다. 
+다른산업에 연봉4천 수습으로 들어갔지만 너무재미가 없다.
+여기서 작업은 멈추고 다른 리폴로지로 작업예정 깃허브사용법 익히는걸로 만족
 
 사용하는 에셋
 
@@ -10,12 +12,6 @@ https://assetstore.unity.com/packages/tools/animation/more-effective-coroutines-
 
 -DoTween Pro 
 https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416
-
-
-게임
-DOTS와 어드레서블을 사용해서 게임을 제작.
-탕탕특공대에 타워디펜스를 합쳐보는것도 좋아보인다.
-
 
 
 Feature(기능)
